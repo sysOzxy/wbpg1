@@ -1,182 +1,356 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>sysOzxy | Junior Dev</title>
-<style>
-:root{
---bg:#08110b;--card:rgba(15,25,18,.55);--accent:#00ff9f;--text:#e6f5ea;--muted:#8ba38f;
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text);overflow-x:hidden}
-#progress{position:fixed;top:0;left:0;height:3px;background:var(--accent);width:0;z-index:9999}
-.bg{position:fixed;inset:0;z-index:-1}
-nav{position:sticky;top:0;background:rgba(8,17,11,.8);backdrop-filter:blur(16px);padding:12px;display:flex;justify-content:center;gap:10px;border-bottom:1px solid rgba(0,255,159,.1)}
-.nav-btn,.btn{cursor:pointer;border:none;border-radius:12px;padding:10px 18px}
-.nav-btn{background:transparent;color:var(--muted)}
-.active,.btn{background:rgba(0,255,159,.15);color:white}
-header{text-align:center;padding:110px 20px 60px}
-h1{font-size:4rem;margin:0;background:linear-gradient(135deg,#00ff9f,#00a060);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-main{max-width:1100px;margin:auto;padding:20px}
-.card{background:var(--card);backdrop-filter:blur(15px);padding:24px;border-radius:18px;border:1px solid rgba(0,255,159,.1);margin-bottom:20px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
-.repo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px}
-.repo-card{padding:18px;border:1px solid rgba(0,255,159,.15);border-radius:14px;text-decoration:none;color:inherit;background:rgba(0,0,0,.15)}
-.badge{display:inline-block;padding:8px 12px;border-radius:999px;border:1px solid rgba(0,255,159,.2);margin:4px}
-input{width:100%;padding:12px;border-radius:10px;background:#101a13;color:white;border:1px solid rgba(0,255,159,.15)}
-pre{white-space:pre-wrap;color:#00ff9f}
-.hidden{display:none}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sysOzxy | Developer Portfolio & Repository</title>
+    <style>
+        :root {
+            --bg-main: #0a0f0a;
+            --bg-card: rgba(15, 25, 18, 0.45);
+            --border-color: rgba(0, 255, 120, 0.1);
+            --text-main: #e0f5e8;
+            --text-muted: #8ba38f;
+            --accent-glow: #00ff9f;
+            --gradient: linear-gradient(135deg, var(--accent-glow) 0%, var(--accent-glow) 50%, #008f55 100%);
+            --theme-blue:#3ba8ff;
+            --theme-red:#ff4d5a;
+            --theme-purple:#b66cff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            background-color: var(--bg-main); 
+            color: var(--text-main); 
+            line-height: 1.6; 
+            min-height: 100vh; 
+            overflow-x: hidden; 
+        }
+
+        .bg-glow { position: fixed; width: 350px; height: 350px; border-radius: 50%; background: radial-gradient(circle, rgba(0, 255, 159, 0.12) 0%, transparent 70%); top: -80px; right: -80px; z-index: -1; }
+        .bg-glow-2 { position: fixed; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle, rgba(0, 140, 80, 0.08) 0%, transparent 70%); bottom: -120px; left: -120px; z-index: -1; }
+
+        nav { 
+            position: sticky; top: 0; background: rgba(10, 15, 10, 0.75); backdrop-filter: blur(20px); 
+            border-bottom: 1px solid var(--border-color); display: flex; justify-content: center; 
+            gap: 8px; padding: 12px; z-index: 1000; 
+        }
+        .nav-btn { background: none; border: none; color: var(--text-muted); font-size: 0.95rem; font-weight: 600; padding: 10px 20px; cursor: pointer; border-radius: 20px; }
+        .nav-btn:hover { color: #fff; background: rgba(0, 255, 159, 0.08); }
+        .nav-btn.active { color: #fff; background: rgba(0, 255, 159, 0.12); border: 1px solid rgba(0, 255, 159, 0.4); box-shadow: 0 0 15px rgba(0, 255, 159, 0.25); }
+
+        header { 
+            position: relative; 
+            text-align: center; 
+            padding: 125px 20px 60px; 
+            max-width: 800px; 
+            margin: 0 auto; 
+        }
+
+        /* Circular Cat Logo */
+        header::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -52%);
+            width: 325px;
+            height: 325px;
+            background: url('https://i.imgur.com/QMIDoCl.jpeg') center/cover no-repeat;
+            border-radius: 50%;
+            opacity: 0.14;
+            z-index: -1;
+            filter: brightness(1.15) contrast(1.1);
+            box-shadow: 0 0 75px rgba(0, 255, 159, 0.45);
+        }
+
+        header h1 { 
+            font-size: 3.25rem; 
+            font-weight: 800; 
+            background: var(--gradient); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            margin-bottom: 12px; 
+            letter-spacing: -1.2px; 
+            position: relative; 
+            z-index: 2;
+        }
+        header p { color: var(--text-muted); font-size: 1.2rem; }
+
+        main { max-width: 900px; margin: 0 auto; padding: 0 20px 60px; }
+        .tab-content { display: none; animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card { background: var(--bg-card); backdrop-filter: blur(16px); border: 1px solid var(--border-color); border-radius: 16px; padding: 35px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        h2 { font-size: 1.9rem; margin-bottom: 20px; color: #fff; }
+        p { margin-bottom: 18px; color: var(--text-muted); font-size: 1.05rem; }
+
+        .repo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 25px; }
+        .repo-card { background: rgba(10, 20, 15, 0.6); border: 1px solid var(--border-color); padding: 22px; border-radius: 12px; text-decoration: none; color: inherit; }
+        .repo-card:hover { border-color: var(--accent-glow); transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0, 255, 159, 0.15); }
+        .repo-name { font-weight: 700; font-size: 1.2rem; color: #fff; margin-bottom: 12px; }
+        .repo-info { font-size: 0.92rem; color: var(--text-muted); line-height: 1.7; }
+
+        .loading { text-align: center; padding: 40px; color: var(--text-muted); }
+        .spinner { display: inline-block; width: 26px; height: 26px; border: 3px solid rgba(0, 255, 159, 0.2); border-top-color: var(--accent-glow); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 12px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .form-group { margin-bottom: 22px; }
+        label { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 8px; color: #fff; }
+        input, textarea { width: 100%; padding: 14px; background: rgba(15, 25, 18, 0.7); border: 1px solid var(--border-color); border-radius: 8px; color: #fff; }
+        input:focus, textarea:focus { border-color: var(--accent-glow); box-shadow: 0 0 12px rgba(0, 255, 159, 0.25); }
+
+        .btn { background: var(--gradient); color: #0a0f0a; padding: 14px 30px; border: none; border-radius: 8px; font-weight: 700; width: 100%; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 255, 159, 0.35); }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 255, 159, 0.5); }
+
+        .github-link { display: inline-block; margin-top: 20px; color: var(--accent-glow); text-decoration: none; font-weight: 600; }
+        .github-link:hover { text-decoration: underline; }
+    
+.achievement-container{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:20px}
+.achievement{padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.03);border:1px solid var(--border-color);box-shadow:0 0 15px rgba(0,255,159,.12);font-size:.85rem}
+.theme-switcher{margin-left:15px;display:flex;gap:6px}
+.theme-switcher button{background:none;border:none;cursor:pointer;font-size:1rem}
+.activity-item{padding:12px;margin:8px 0;background:rgba(255,255,255,.03);border-radius:10px}
+.featured-project{margin-bottom:20px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999}
+.modal-content{background:#111;padding:25px;border-radius:20px;width:650px;max-width:90%;margin:80px auto}
+.close{float:right;font-size:2rem;cursor:pointer}
+.progress{position:fixed;top:0;left:0;height:3px;background:var(--accent-glow);width:0;z-index:99999}
+
 </style>
 </head>
-<body>
-<div id="progress"></div>
-<canvas class="bg" id="bg"></canvas>
+<body><div class="progress" id="progress"></div>
 
-<nav>
-<button class="nav-btn active" onclick="showTab('about',this)">About</button>
-<button class="nav-btn" onclick="showTab('projects',this)">Projects</button>
-<button class="nav-btn" onclick="showTab('contact',this)">Contact</button>
-</nav>
+    <div class="bg-glow"></div>
+    <div class="bg-glow-2"></div>
 
-<header>
-<h1>sysOzxy</h1>
-<p>• Junior Developer •</p>
-<p>
-<button class="btn" onclick="showTab('projects',document.querySelectorAll('.nav-btn')[1])">View Projects</button>
-<a class="btn" href="https://github.com/sysOzxy" target="_blank" style="text-decoration:none">GitHub</a>
-</p>
-</header>
+    <nav>
+        <button class="nav-btn active" onclick="switchTab('about', this)">Who I Am</button>
+        <button class="nav-btn" onclick="switchTab('projects', this)">Current Projects</button>
+        <button class="nav-btn" onclick="switchTab('contact', this)">Reach Out</button>
+    <div class="theme-switcher">
+    <button onclick="setTheme('green')">🟢</button>
+    <button onclick="setTheme('blue')">🔵</button>
+    <button onclick="setTheme('red')">🔴</button>
+    <button onclick="setTheme('purple')">🟣</button>
+    </div></nav>
 
-<main>
-<section id="about">
-<div class="card">
-<h2>Developer Dashboard</h2>
-<div class="grid">
-<div class="repo-card"><h3 id="repos">--</h3><p>Repositories</p></div>
-<div class="repo-card"><h3 id="followers">--</h3><p>Followers</p></div>
-<div class="repo-card"><h3 id="following">--</h3><p>Following</p></div>
+    <header>
+        <h1>sysOzxy</h1>
+        <p>Junior Developer</p>
+<div class="achievement-container">
+<div class="achievement">🏆 C++</div>
+<div class="achievement">⚡ Python</div>
+<div class="achievement">🎮 Game Dev</div>
+<div class="achievement">🚀 Open Source</div>
 </div>
-</div>
+    </header>
 
-<div class="card">
-<h2>Featured Project</h2>
-<div id="featured">Loading...</div>
+    <main>
+        <section id="about" class="tab-content active">
+            <div class="card">
+                <h2>About Me</h2>
+                <p>Hello! I am a passionate junior developer focused on building minimal and lightning fast tools for game development.</p>
+                <p>I focus on modern development pipelines and automation.</p>
+<div class="repo-card featured-project">
+<div style="font-size:.75rem;opacity:.8">FEATURED PROJECT</div>
+<h3 id="featured-project">Loading...</h3>
+<p id="featured-desc"></p>
 </div>
+<h3 style="margin-top:20px">Recent Activity</h3>
+<div id="activityFeed">Loading activity...</div>
+            </div>
+        </section>
 
-<div class="card">
-<h2>Tech Stack</h2>
-<div>
-<span class="badge">C++</span>
-<span class="badge">Python</span>
-<span class="badge">JavaScript</span>
-<span class="badge">HTML/CSS</span>
-<span class="badge">Git</span>
-</div>
-</div>
+        <section id="projects" class="tab-content">
+            <div class="card">
+                <h2>My Currect Public Projects</h2>
+                <p>Updated in real time, follow along!</p>
+                <div class="repo-grid" id="github-repos">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <div>Loading repositories...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<div class="card">
-<h2>Developer Terminal</h2>
-<pre id="terminal"></pre>
-</div>
+        <section id="contact" class="tab-content">
+            <div class="card">
+                <h2>Get In Touch</h2>
+                <p>Have an idea or project? Drop a message directly into the portal below.</p>
+                
+                <form action="https://formspree.io/f/xrevplvy" method="POST">
+                    <div class="form-group"><label for="name">Name</label><input type="text" name="name" id="name" required placeholder="Your name"></div>
+                    <div class="form-group"><label for="email">Email Address</label><input type="email" name="_replyto" id="email" required placeholder="your@email.com"></div>
+                    <div class="form-group"><label for="message">Message</label><textarea name="message" id="message" rows="5" required placeholder="Tell me about your project..."></textarea></div>
+                    <button type="submit" class="btn">Send Secure Message</button>
+                </form>
 
-<div class="card">
-<h2>Journey Timeline</h2>
-<p>2023 → Learned Python, later expanded to C++</p>
-<p>2025 → Started building public tools & repositories</p>
-<p>2026 → Expanding open-source projects & began creating dev tools</p>
-</div>
-</section>
+                <a href="https://github.com/sysOzxy" target="_blank" class="github-link">→ View my full GitHub profile</a>
+            </div>
+        </section>
+    </main>
 
-<section id="projects" class="hidden">
-<div class="card">
-<h2>Projects</h2>
-<input id="search" placeholder="Search repositories...">
-<div class="repo-grid" id="reposGrid"></div>
-</div>
-</section>
+    <script>
+        const githubUsername = "sysOzxy";
 
-<section id="contact" class="hidden">
-<div class="card">
-<h2>Contact</h2>
-<form action="https://formspree.io/f/xrevplvy" method="POST">
-<input name="name" placeholder="Name"><br><br>
-<input name="_replyto" placeholder="Email"><br><br>
-<input name="message" placeholder="Message"><br><br>
-<button class="btn">Send Message</button>
-</form>
-</div>
-</section>
-</main>
+        function switchTab(tabId, buttonElement) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            buttonElement.classList.add('active');
+            if (tabId === 'projects') fetchGitHubRepos();
+        }
 
-<script>
-const user='sysOzxy';
-function showTab(id,btn){
-document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
-document.getElementById(id).classList.remove('hidden');
-document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-btn.classList.add('active');
+        async function fetchGitHubRepos() {
+            const grid = document.getElementById('github-repos');
+            grid.innerHTML = `<div class="loading"><div class="spinner"></div><div>Loading repositories...</div></div>`;
+
+            try {
+                const response = await fetch(`https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=6`);
+                if (!response.ok) throw new Error('GitHub API error');
+                const repos = await response.json();
+                grid.innerHTML = '';
+                if(repos.length){
+                  const fp=document.getElementById('featured-project');
+                  const fd=document.getElementById('featured-desc');
+                  if(fp){fp.textContent=repos[0].name; fd.textContent=repos[0].description||'Featured repository';}
+                }
+
+                for (const repo of repos) {
+                    let languagesHTML = 'Code: ';
+                    try {
+                        const langRes = await fetch(repo.languages_url);
+                        if (langRes.ok) {
+                            const languages = await langRes.json();
+                            const total = Object.values(languages).reduce((a, b) => a + b, 0);
+                            const langArray = Object.entries(languages)
+                                .sort((a, b) => b[1] - a[1])
+                                .slice(0, 3)
+                                .map(([lang, bytes]) => `${lang} ${(bytes / total * 100).toFixed(0)}%`);
+                            languagesHTML += langArray.join(' • ') || 'No languages detected';
+                        }
+                    } catch (e) {
+                        languagesHTML += repo.language || 'Unknown';
+                    }
+
+                    const card = document.createElement('a');
+                    card.className = 'repo-card';
+                    card.href = repo.html_url;
+                    card.target = '_blank';
+                    card.innerHTML = `
+                        <div class="repo-name">${repo.name}</div>
+                        <div class="repo-info">
+                            <div>${languagesHTML}</div>
+                            <div>Updated: ${new Date(repo.updated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</div>
+                            <div>Author: ${githubUsername}</div>
+<div style="margin-top:10px"><button onclick="event.preventDefault();showLanguages('${repo.languages_url}')" class="nav-btn">Language Breakdown</button></div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                }
+            } catch (error) {
+                grid.innerHTML = `<p style="color:#ff6b6b; text-align:center;">Failed to load repositories.<br>Please try again later.</p>`;
+            }
+        }
+    
+const themes={green:'#00ff9f',blue:'#3ba8ff',red:'#ff4d5a',purple:'#b66cff'};
+function setTheme(t){
+ document.documentElement.style.setProperty('--accent-glow',themes[t]);
+ localStorage.setItem('theme',t);
 }
+const saved=localStorage.getItem('theme');
+if(saved) setTheme(saved);
 
 window.addEventListener('scroll',()=>{
-const h=document.documentElement;
-document.getElementById('progress').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';
+ const h=document.documentElement;
+ document.getElementById('progress').style.width=((h.scrollTop/(h.scrollHeight-h.clientHeight))*100)+'%';
 });
 
-async function load(){
-const u=await fetch(`https://api.github.com/users/${user}`).then(r=>r.json());
-repos.textContent=u.public_repos;
-followers.textContent=u.followers;
-following.textContent=u.following;
-
-const reposData=await fetch(`https://api.github.com/users/${user}/repos?sort=updated&per_page=100`).then(r=>r.json());
-
-featured.innerHTML=`<strong>${reposData[0]?.name||'No repo'}</strong><br>${reposData[0]?.description||''}`;
-
-const grid=document.getElementById('reposGrid');
-function render(filter=''){
-grid.innerHTML='';
-reposData.filter(r=>r.name.toLowerCase().includes(filter.toLowerCase()))
-.forEach(r=>{
-grid.innerHTML+=`<a class="repo-card" target="_blank" href="${r.html_url}">
-<h3>${r.name}</h3>
-<p>${r.description||'No description'}</p>
-<p>★ ${r.stargazers_count}</p>
-</a>`;
-});
+async function loadActivity(){
+ try{
+  const res=await fetch(`https://api.github.com/users/${githubUsername}/events/public`);
+  const data=await res.json();
+  const feed=document.getElementById('activityFeed');
+  if(feed){
+   feed.innerHTML='';
+   data.slice(0,8).forEach(e=>{
+    feed.innerHTML+=`<div class="activity-item"><b>${e.type}</b><br>${e.repo.name}</div>`;
+   });
+  }
+ }catch(e){}
 }
-render();
-search.oninput=e=>render(e.target.value);
+
+let langChart;
+async function showLanguages(url){
+ const data=await (await fetch(url)).json();
+ document.getElementById('languageModal').style.display='block';
+ const ctx=document.getElementById('languageChart');
+ if(langChart) langChart.destroy();
+ langChart=new Chart(ctx,{type:'pie',data:{labels:Object.keys(data),datasets:[{data:Object.values(data)}]}});
 }
-load();
-
-const text=`> whoami
-Junior Developer
-
-> skills
-C++, Python, JavaScript
-
-> status
-Building cool stuff...`;
-let i=0;
-setInterval(()=>{
-if(i<text.length){terminal.textContent+=text[i++];}
-},25);
+function closeModal(){document.getElementById('languageModal').style.display='none';}
 
 document.addEventListener('keydown',e=>{
-if(e.key==='g')showTab('projects',document.querySelectorAll('.nav-btn')[1]);
-if(e.key==='a')showTab('about',document.querySelectorAll('.nav-btn')[0]);
-if(e.key==='c')showTab('contact',document.querySelectorAll('.nav-btn')[2]);
+ if(e.ctrlKey&&e.key==='k'){alert('Command palette placeholder');}
 });
 
-const c=document.getElementById('bg'),x=c.getContext('2d');
-function resize(){c.width=innerWidth;c.height=innerHeight} resize(); addEventListener('resize',resize);
-const p=[...Array(70)].map(()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,v:0.4+Math.random()}));
-function draw(){
-x.clearRect(0,0,c.width,c.height);
-p.forEach(a=>{a.y+=a.v;if(a.y>innerHeight)a.y=0;x.beginPath();x.arc(a.x,a.y,1.5,0,7);x.fillStyle='rgba(0,255,159,.35)';x.fill();});
-requestAnimationFrame(draw);
-} draw();
+loadActivity();
+</script>
+
+<div id="languageModal" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal()">×</span>
+<h2>Repository Analytics</h2>
+<canvas id="languageChart"></canvas>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js">
+const themes={green:'#00ff9f',blue:'#3ba8ff',red:'#ff4d5a',purple:'#b66cff'};
+function setTheme(t){
+ document.documentElement.style.setProperty('--accent-glow',themes[t]);
+ localStorage.setItem('theme',t);
+}
+const saved=localStorage.getItem('theme');
+if(saved) setTheme(saved);
+
+window.addEventListener('scroll',()=>{
+ const h=document.documentElement;
+ document.getElementById('progress').style.width=((h.scrollTop/(h.scrollHeight-h.clientHeight))*100)+'%';
+});
+
+async function loadActivity(){
+ try{
+  const res=await fetch(`https://api.github.com/users/${githubUsername}/events/public`);
+  const data=await res.json();
+  const feed=document.getElementById('activityFeed');
+  if(feed){
+   feed.innerHTML='';
+   data.slice(0,8).forEach(e=>{
+    feed.innerHTML+=`<div class="activity-item"><b>${e.type}</b><br>${e.repo.name}</div>`;
+   });
+  }
+ }catch(e){}
+}
+
+let langChart;
+async function showLanguages(url){
+ const data=await (await fetch(url)).json();
+ document.getElementById('languageModal').style.display='block';
+ const ctx=document.getElementById('languageChart');
+ if(langChart) langChart.destroy();
+ langChart=new Chart(ctx,{type:'pie',data:{labels:Object.keys(data),datasets:[{data:Object.values(data)}]}});
+}
+function closeModal(){document.getElementById('languageModal').style.display='none';}
+
+document.addEventListener('keydown',e=>{
+ if(e.ctrlKey&&e.key==='k'){alert('Command palette placeholder');}
+});
+
+loadActivity();
 </script>
 </body>
 </html>
