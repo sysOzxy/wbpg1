@@ -72,9 +72,9 @@
     <div class="bg-glow-2"></div>
 
     <nav>
-        <button class="nav-btn active" onclick="switchTab('about')">About Me</button>
-        <button class="nav-btn" onclick="switchTab('projects')">Projects</button>
-        <button class="nav-btn" onclick="switchTab('contact')">Contact</button>
+        <button class="nav-btn active" onclick="switchTab('about', this)">About Me</button>
+        <button class="nav-btn" onclick="switchTab('projects', this)">Projects</button>
+        <button class="nav-btn" onclick="switchTab('contact', this)">Contact</button>
     </nav>
 
     <header>
@@ -132,12 +132,15 @@
         const githubUsername = "sysOzxy";
 
         // Tab Navigation Architecture
-        function switchTab(tabId) {
+        function switchTab(tabId, buttonElement) {
+            // Hide all tab sections
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            // Deactivate all navigation buttons
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
             
+            // Show the target section and activate its button
             document.getElementById(tabId).classList.add('active');
-            event.target.classList.add('active');
+            buttonElement.classList.add('active');
 
             if(tabId === 'projects') {
                 fetchGitHubRepos();
@@ -161,7 +164,4 @@
                     card.target = '_blank';
                     card.innerHTML = `
                         <div>
-                            <div class="repo-name">📦 ${repo.name}</div>
-                            <p class="repo-desc">${repo.description || 'No project catalog entry summary provided.'}</p>
-
-${repo.language || 'Software'}⭐ ${repo.stargazers_count}`;grid.appendChild(card);});} catch (error) {grid.innerHTML = "Data retrieval issue loading GitHub modules. Please verify repository state permissions.";}}
+📦 ${repo.name}${repo.description || 'No project catalog entry summary provided.'} ${repo.language || 'Software'}⭐ ${repo.stargazers_count}`;grid.appendChild(card);});} catch (error) {grid.innerHTML = "Data retrieval issue loading GitHub modules. Please verify repository state permissions.";}}
