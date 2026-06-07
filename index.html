@@ -26,52 +26,29 @@
         }
 
         .bg-glow { 
-            position: fixed; 
-            width: 350px; 
-            height: 350px; 
-            border-radius: 50%; 
+            position: fixed; width: 350px; height: 350px; border-radius: 50%; 
             background: radial-gradient(circle, rgba(0, 255, 159, 0.12) 0%, transparent 70%); 
-            top: -80px; 
-            right: -80px; 
-            z-index: -1; 
+            top: -80px; right: -80px; z-index: -1; 
         }
         .bg-glow-2 { 
-            position: fixed; 
-            width: 420px; 
-            height: 420px; 
-            border-radius: 50%; 
+            position: fixed; width: 420px; height: 420px; border-radius: 50%; 
             background: radial-gradient(circle, rgba(0, 140, 80, 0.08) 0%, transparent 70%); 
-            bottom: -120px; 
-            left: -120px; 
-            z-index: -1; 
+            bottom: -120px; left: -120px; z-index: -1; 
         }
 
         nav { 
-            position: sticky; 
-            top: 0; 
-            background: rgba(10, 15, 10, 0.75); 
-            backdrop-filter: blur(20px); 
-            border-bottom: 1px solid var(--border-color); 
-            display: flex; 
-            justify-content: center; 
-            gap: 8px; 
-            padding: 12px; 
-            z-index: 1000; 
+            position: sticky; top: 0; background: rgba(10, 15, 10, 0.75); 
+            backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); 
+            display: flex; justify-content: center; gap: 8px; padding: 12px; z-index: 1000; 
         }
         .nav-btn { 
-            background: none; 
-            border: none; 
-            color: var(--text-muted); 
-            font-size: 0.95rem; 
-            font-weight: 600; 
-            padding: 10px 20px; 
-            cursor: pointer; 
-            border-radius: 20px; 
+            background: none; border: none; color: var(--text-muted); 
+            font-size: 0.95rem; font-weight: 600; padding: 10px 20px; 
+            cursor: pointer; border-radius: 20px; 
         }
         .nav-btn:hover { color: #fff; background: rgba(0, 255, 159, 0.08); }
         .nav-btn.active { 
-            color: #fff; 
-            background: rgba(0, 255, 159, 0.12); 
+            color: #fff; background: rgba(0, 255, 159, 0.12); 
             border: 1px solid rgba(0, 255, 159, 0.4); 
             box-shadow: 0 0 15px rgba(0, 255, 159, 0.25); 
         }
@@ -79,43 +56,42 @@
         header { 
             position: relative; 
             text-align: center; 
-            padding: 110px 20px 60px; 
+            padding: 120px 20px 60px; 
             max-width: 800px; 
             margin: 0 auto; 
         }
 
-        /* Circular Stylized Cat Logo Behind Name */
+        /* Circular Green Cat Logo */
         header::before {
             content: '';
             position: absolute;
-            top: 48%;
+            top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            width: 310px;
-            height: 310px;
-            background: url('https://i.imgur.com/mWgWw8l.jpg') center/cover no-repeat;
+            transform: translate(-50%, -52%);
+            width: 320px;
+            height: 320px;
+            background: url('https://i.imgur.com/SdLrIuD.jpg') center/cover no-repeat;
             border-radius: 50%;
-            opacity: 0.14;
+            opacity: 0.13;
             z-index: -1;
-            filter: brightness(1.1) contrast(1.05);
-            box-shadow: 0 0 65px rgba(0, 255, 159, 0.4);
+            filter: brightness(1.12) contrast(1.08);
+            box-shadow: 0 0 70px rgba(0, 255, 159, 0.45);
         }
 
         header h1 { 
-            font-size: 3.1rem; 
+            font-size: 3.2rem; 
             font-weight: 800; 
             background: var(--gradient); 
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent; 
             margin-bottom: 12px; 
-            letter-spacing: -0.5px; 
+            letter-spacing: -1px; 
             position: relative;
             z-index: 2;
         }
         header p { 
             color: var(--text-muted); 
-            font-size: 1.18rem; 
-            font-weight: 400; 
+            font-size: 1.2rem; 
         }
 
         main { max-width: 900px; margin: 0 auto; padding: 0 20px 60px; }
@@ -130,10 +106,9 @@
             border-radius: 16px; 
             padding: 35px; 
             box-shadow: 0 20px 40px rgba(0,0,0,0.5); 
-            position: relative; 
         }
 
-        h2 { font-size: 1.9rem; margin-bottom: 20px; color: #fff; letter-spacing: -0.3px; }
+        h2 { font-size: 1.9rem; margin-bottom: 20px; color: #fff; }
         p { margin-bottom: 18px; color: var(--text-muted); font-size: 1.05rem; }
 
         .repo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 25px; }
@@ -153,10 +128,9 @@
         .repo-name { font-weight: 700; font-size: 1.2rem; color: #fff; margin-bottom: 12px; }
         .repo-info { font-size: 0.92rem; color: var(--text-muted); line-height: 1.7; }
 
-        .loading { text-align: center; padding: 40px 20px; color: var(--text-muted); }
+        .loading { text-align: center; padding: 40px; color: var(--text-muted); }
         .spinner {
-            display: inline-block;
-            width: 26px; height: 26px;
+            display: inline-block; width: 26px; height: 26px;
             border: 3px solid rgba(0, 255, 159, 0.2);
             border-top-color: var(--accent-glow);
             border-radius: 50%;
@@ -168,13 +142,8 @@
         .form-group { margin-bottom: 22px; }
         label { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 8px; color: #fff; }
         input, textarea { 
-            width: 100%; 
-            padding: 14px; 
-            background: rgba(15, 25, 18, 0.7); 
-            border: 1px solid var(--border-color); 
-            border-radius: 8px; 
-            color: #fff; 
-            font-size: 1rem; 
+            width: 100%; padding: 14px; background: rgba(15, 25, 18, 0.7); 
+            border: 1px solid var(--border-color); border-radius: 8px; color: #fff; 
         }
         input:focus, textarea:focus { 
             border-color: var(--accent-glow); 
@@ -182,25 +151,15 @@
         }
 
         .btn { 
-            background: var(--gradient); 
-            color: #0a0f0a; 
-            padding: 14px 30px; 
-            border: none; 
-            border-radius: 8px; 
-            font-weight: 700; 
-            font-size: 1rem; 
-            cursor: pointer; 
-            width: 100%; 
-            box-shadow: 0 4px 15px rgba(0, 255, 159, 0.35); 
+            background: var(--gradient); color: #0a0f0a; padding: 14px 30px; 
+            border: none; border-radius: 8px; font-weight: 700; width: 100%; 
+            cursor: pointer; box-shadow: 0 4px 15px rgba(0, 255, 159, 0.35); 
         }
         .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 255, 159, 0.5); }
 
         .github-link {
-            display: inline-block;
-            margin-top: 20px;
-            color: var(--accent-glow);
-            text-decoration: none;
-            font-weight: 600;
+            display: inline-block; margin-top: 20px;
+            color: var(--accent-glow); text-decoration: none; font-weight: 600;
         }
         .github-link:hover { text-decoration: underline; }
     </style>
@@ -222,7 +181,6 @@
     </header>
 
     <main>
-        <!-- ABOUT, PROJECTS, CONTACT sections remain the same as previous version -->
         <section id="about" class="tab-content active">
             <div class="card">
                 <h2>About Me</h2>
@@ -250,30 +208,18 @@
                 <p>Have an idea or project? Drop a message directly into the portal below.</p>
                 
                 <form action="https://formspree.io/f/xrevplvy" method="POST">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" name="name" id="name" required placeholder="Your Name">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" name="_replyto" id="email" required placeholder="your@email.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea name="message" id="message" rows="5" required placeholder="Tell me about your project..."></textarea>
-                    </div>
+                    <div class="form-group"><label for="name">Name</label><input type="text" name="name" id="name" required placeholder="Your Name"></div>
+                    <div class="form-group"><label for="email">Email Address</label><input type="email" name="_replyto" id="email" required placeholder="your@email.com"></div>
+                    <div class="form-group"><label for="message">Message</label><textarea name="message" id="message" rows="5" required placeholder="Tell me about your project..."></textarea></div>
                     <button type="submit" class="btn">Send Secure Message</button>
                 </form>
 
-                <a href="https://github.com/sysOzxy" target="_blank" class="github-link">
-                    → View my full GitHub profile
-                </a>
+                <a href="https://github.com/sysOzxy" target="_blank" class="github-link">→ View my full GitHub profile</a>
             </div>
         </section>
     </main>
 
     <script>
-        // (Same JavaScript as before - unchanged)
         const githubUsername = "sysOzxy";
 
         function switchTab(tabId, buttonElement) {
