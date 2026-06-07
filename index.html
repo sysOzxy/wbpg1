@@ -1,1 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>sysOzxy v2</title>
+<style>
+:root{
+--bg:#08110b;--card:rgba(15,25,18,.55);--accent:#00ff9f;--text:#e6f5ea;--muted:#8ba38f;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text);overflow-x:hidden}
+#progress{position:fixed;top:0;left:0;height:3px;background:var(--accent);width:0;z-index:9999}
+.bg{position:fixed;inset:0;z-index:-1}
+nav{position:sticky;top:0;background:rgba(8,17,11,.8);backdrop-filter:blur(16px);padding:12px;display:flex;justify-content:center;gap:10px;border-bottom:1px solid rgba(0,255,159,.1)}
+.nav-btn,.btn{cursor:pointer;border:none;border-radius:12px;padding:10px 18px}
+.nav-btn{background:transparent;color:var(--muted)}
+.active,.btn{background:rgba(0,255,159,.15);color:white}
+header{text-align:center;padding:110px 20px 60px}
+h1{font-size:4rem;margin:0;background:linear-gradient(135deg,#00ff9f,#00a060);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+main{max-width:1100px;margin:auto;padding:20px}
+.card{background:var(--card);backdrop-filter:blur(15px);padding:24px;border-radius:18px;border:1px solid rgba(0,255,159,.1);margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.repo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px}
+.repo-card{padding:18px;border:1px solid rgba(0,255,159,.15);border-radius:14px;text-decoration:none;color:inherit;background:rgba(0,0,0,.15)}
+.badge{display:inline-block;padding:8px 12px;border-radius:999px;border:1px solid rgba(0,255,159,.2);margin:4px}
+input{width:100%;padding:12px;border-radius:10px;background:#101a13;color:white;border:1px solid rgba(0,255,159,.15)}
+pre{white-space:pre-wrap;color:#00ff9f}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<canvas class="bg" id="bg"></canvas>
 
+<nav>
+<button class="nav-btn active" onclick="showTab('about',this)">About</button>
+<button class="nav-btn" onclick="showTab('projects',this)">Projects</button>
+<button class="nav-btn" onclick="showTab('contact',this)">Contact</button>
+</nav>
+
+<header>
+<h1>sysOzxy</h1>
+<p>Junior Developer • Automation • Game Dev Tools</p>
+<p>
+<button class="btn" onclick="showTab('projects',document.querySelectorAll('.nav-btn')[1])">View Projects</button>
+<a class="btn" href="https://github.com/sysOzxy" target="_blank" style="text-decoration:none">GitHub</a>
+</p>
+</header>
+
+<main>
+<section id="about">
+<div class="card">
+<h2>Developer Dashboard</h2>
+<div class="grid">
+<div class="repo-card"><h3 id="repos">--</h3><p>Repositories</p></div>
+<div class="repo-card"><h3 id="followers">--</h3><p>Followers</p></div>
+<div class="repo-card"><h3 id="following">--</h3><p>Following</p></div>
+</div>
+</div>
+
+<div class="card">
+<h2>Featured Project</h2>
+<p>Your most recently updated repository appears here automatically.</p>
+<div id="featured">Loading...</div>
+</div>
+
+<div class="card">
+<h2>Tech Stack</h2>
+<div>
+<span class="badge">C++</span>
+<span class="badge">Python</span>
+<span class="badge">JavaScript</span>
+<span class="badge">HTML/CSS</span>
+<span class="badge">Git</span>
+</div>
+</div>
+
+<div class="card">
+<h2>Developer Terminal</h2>
+<pre id="terminal"></pre>
+</div>
+
+<div class="card">
+<h2>Journey Timeline</h2>
+<p>2024 → Started learning development</p>
+<p>2025 → Building public tools & repositories</p>
+<p>2026 → Expanding open-source projects</p>
+</div>
+</section>
+
+<section id="projects" class="hidden">
+<div class="card">
+<h2>Projects</h2>
+<input id="search" placeholder="Search repositories...">
+<div class="repo-grid" id="reposGrid"></div>
+</div>
+</section>
+
+<section id="contact" class="hidden">
+<div class="card">
+<h2>Contact</h2>
+<form action="https://formspree.io/f/xrevplvy" method="POST">
+<input name="name" placeholder="Name"><br><br>
+<input name="_replyto" placeholder="Email"><br><br>
+<input name="message" placeholder="Message"><br><br>
+<button class="btn">Send Message</button>
+</form>
+</div>
+</section>
+</main>
+
+<script>
+const user='sysOzxy';
+function showTab(id,btn){
+document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+document.getElementById(id).classList.remove('hidden');
+document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');
+}
+
+window.addEventListener('scroll',()=>{
+const h=document.documentElement;
+document.getElementById('progress').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';
+});
+
+async function load(){
+const u=await fetch(`https://api.github.com/users/${user}`).then(r=>r.json());
+repos.textContent=u.public_repos;
+followers.textContent=u.followers;
+following.textContent=u.following;
+
+const reposData=await fetch(`https://api.github.com/users/${user}/repos?sort=updated&per_page=100`).then(r=>r.json());
+
+featured.innerHTML=`<strong>${reposData[0]?.name||'No repo'}</strong><br>${reposData[0]?.description||''}`;
+
+const grid=document.getElementById('reposGrid');
+function render(filter=''){
+grid.innerHTML='';
+reposData.filter(r=>r.name.toLowerCase().includes(filter.toLowerCase()))
+.forEach(r=>{
+grid.innerHTML+=`<a class="repo-card" target="_blank" href="${r.html_url}">
+<h3>${r.name}</h3>
+<p>${r.description||'No description'}</p>
+<p>★ ${r.stargazers_count}</p>
+</a>`;
+});
+}
+render();
+search.oninput=e=>render(e.target.value);
+}
+load();
+
+const text=`> whoami
+Junior Developer
+
+> skills
+C++, Python, JavaScript
+
+> status
+Building cool stuff...`;
+let i=0;
+setInterval(()=>{
+if(i<text.length){terminal.textContent+=text[i++];}
+},25);
+
+document.addEventListener('keydown',e=>{
+if(e.key==='g')showTab('projects',document.querySelectorAll('.nav-btn')[1]);
+if(e.key==='a')showTab('about',document.querySelectorAll('.nav-btn')[0]);
+if(e.key==='c')showTab('contact',document.querySelectorAll('.nav-btn')[2]);
+});
+
+const c=document.getElementById('bg'),x=c.getContext('2d');
+function resize(){c.width=innerWidth;c.height=innerHeight} resize(); addEventListener('resize',resize);
+const p=[...Array(70)].map(()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,v:0.4+Math.random()}));
+function draw(){
+x.clearRect(0,0,c.width,c.height);
+p.forEach(a=>{a.y+=a.v;if(a.y>innerHeight)a.y=0;x.beginPath();x.arc(a.x,a.y,1.5,0,7);x.fillStyle='rgba(0,255,159,.35)';x.fill();});
+requestAnimationFrame(draw);
+} draw();
+</script>
+</body>
+</html>
