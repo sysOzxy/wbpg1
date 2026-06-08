@@ -236,6 +236,52 @@
         .loading { grid-column: 1 / -1; text-align: center; padding: 50px; color: var(--text-muted); }
         .spinner { display: inline-block; width: 28px; height: 28px; border: 3px solid rgba(0, 255, 159, 0.18); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.9s linear infinite; margin-bottom: 14px; }
 
+        /* In the works — classified cards */
+        .classified-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 56px; }
+        .classified-head h2 { margin: 0; }
+        .clearance-pill {
+            font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; letter-spacing: 2px; text-transform: uppercase;
+            color: #ff5f56; border: 1px solid rgba(255,95,86,0.4); background: rgba(255,95,86,0.08);
+            padding: 4px 10px; border-radius: 6px;
+        }
+        .classified-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; margin-top: 18px; }
+        .classified-card {
+            position: relative; overflow: hidden; display: flex; flex-direction: column;
+            background: var(--bg-card); border: 1px solid var(--border-color); padding: 22px; border-radius: 14px;
+            cursor: not-allowed; transition: border-color .25s, transform .25s;
+        }
+        .classified-card::before {
+            content: ''; position: absolute; inset: 0; z-index: 1;
+            background: repeating-linear-gradient(45deg, rgba(0,0,0,0.32) 0 14px, rgba(0,0,0,0.14) 14px 28px);
+            backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+            transition: opacity .3s; pointer-events: none;
+        }
+        .classified-card:hover::before { opacity: 0.45; }
+        .classified-card > * { filter: blur(0.4px); }
+        .classified-card .redacted-content { opacity: 0.55; transition: opacity .3s; }
+        .classified-card:hover .redacted-content { opacity: 0.72; }
+        .classified-stamp {
+            position: absolute; top: 16px; right: -34px; z-index: 3; transform: rotate(38deg);
+            font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 2px; font-weight: 700;
+            color: #ff5f56; border: 2px solid #ff5f56; padding: 4px 40px; text-transform: uppercase;
+            background: rgba(20,8,8,0.6); opacity: 0.9;
+        }
+        .classified-head-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; position: relative; z-index: 2; }
+        .classified-head-row svg { flex: 0 0 auto; color: var(--text-muted); }
+        .classified-name { font-weight: 700; font-size: 1.05rem; color: #fff; letter-spacing: 1px; }
+        .redacted-bar { display: inline-block; height: 0.72em; border-radius: 3px; background: var(--text-faint); vertical-align: middle; opacity: 0.5; }
+        .classified-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; flex: 1 1 auto; margin-bottom: 16px; position: relative; z-index: 2; }
+        .classified-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; padding-top: 14px; padding-right: 40px; border-top: 1px solid var(--border-color); position: relative; z-index: 2; }
+        .classified-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 1px; color: var(--text-faint); text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; }
+        .priority-dot { width: 8px; height: 8px; border-radius: 50%; background: #ff5f56; box-shadow: 0 0 8px rgba(255,95,86,0.7); animation: pulseDot 1.8s infinite; }
+        @keyframes pulseDot { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+        .progress-track { height: 5px; border-radius: 4px; background: var(--bg-elevated); overflow: hidden; margin-top: 14px; position: relative; z-index: 2; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-dim), var(--accent)); border-radius: 4px; }
+        .lock-badge {
+            position: absolute; bottom: 18px; right: 18px; z-index: 4; width: 30px; height: 30px; border-radius: 8px;
+            display: grid; place-items: center; background: rgba(0,0,0,0.45); border: 1px solid var(--border-color); color: var(--text-muted);
+        }
+
         /* Contact */
         .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
         .form-group { margin-bottom: 18px; }
@@ -434,6 +480,75 @@
             <p class="section-intro">Pulled live from GitHub and updated in real time. Follow along as these evolve.</p>
             <div class="repo-grid" id="github-repos">
                 <div class="loading"><div class="spinner"></div><div>Loading repositories…</div></div>
+            </div>
+
+            <div class="classified-head">
+                <h2>In the Works</h2>
+                <span class="clearance-pill">Classified · Clearance Required</span>
+            </div>
+            <p class="section-intro">Active R&amp;D — details are under wraps until launch. Names and specs redacted.</p>
+            <div class="classified-grid">
+
+                <div class="classified-card" aria-label="Classified project, details unavailable">
+                    <span class="classified-stamp">Top Secret</span>
+                    <div class="classified-head-row">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        <span class="classified-name">PROJECT&nbsp;<span class="redacted-bar" style="width:90px"></span></span>
+                    </div>
+                    <p class="classified-desc redacted-content">A next-gen platform rebuilding how <span class="redacted-bar" style="width:70px"></span> interacts with <span class="redacted-bar" style="width:54px"></span>. Early benchmarks exceed <span class="redacted-bar" style="width:40px"></span> targets.</p>
+                    <div class="progress-track"><div class="progress-fill" style="width:68%"></div></div>
+                    <div class="classified-meta">
+                        <span class="classified-tag"><span class="priority-dot"></span> Priority: Critical</span>
+                        <span class="classified-tag">68% · Q<span class="redacted-bar" style="width:10px"></span></span>
+                    </div>
+                    <div class="lock-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+                </div>
+
+                <div class="classified-card" aria-label="Classified project, details unavailable">
+                    <span class="classified-stamp">Restricted</span>
+                    <div class="classified-head-row">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="9"/></svg>
+                        <span class="classified-name">CODENAME&nbsp;<span class="redacted-bar" style="width:64px"></span></span>
+                    </div>
+                    <p class="classified-desc redacted-content">Distributed system for <span class="redacted-bar" style="width:88px"></span> at scale, leveraging <span class="redacted-bar" style="width:46px"></span> and a custom <span class="redacted-bar" style="width:60px"></span> pipeline.</p>
+                    <div class="progress-track"><div class="progress-fill" style="width:41%"></div></div>
+                    <div class="classified-meta">
+                        <span class="classified-tag"><span class="priority-dot"></span> Priority: High</span>
+                        <span class="classified-tag">41% · Internal</span>
+                    </div>
+                    <div class="lock-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+                </div>
+
+                <div class="classified-card" aria-label="Classified project, details unavailable">
+                    <span class="classified-stamp">Top Secret</span>
+                    <div class="classified-head-row">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                        <span class="classified-name">OPERATION&nbsp;<span class="redacted-bar" style="width:76px"></span></span>
+                    </div>
+                    <p class="classified-desc redacted-content">Stealth tooling that automates <span class="redacted-bar" style="width:58px"></span> workflows end-to-end. Patent for <span class="redacted-bar" style="width:50px"></span> pending.</p>
+                    <div class="progress-track"><div class="progress-fill" style="width:23%"></div></div>
+                    <div class="classified-meta">
+                        <span class="classified-tag"><span class="priority-dot"></span> Priority: Critical</span>
+                        <span class="classified-tag">23% · Stealth</span>
+                    </div>
+                    <div class="lock-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+                </div>
+
+                <div class="classified-card" aria-label="Classified project, details unavailable">
+                    <span class="classified-stamp">Restricted</span>
+                    <div class="classified-head-row">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 3 2 5 2 7h10c0-2 2-4 2-7a7 7 0 0 0-7-7z"/><path d="M9 21h6"/></svg>
+                        <span class="classified-name">INITIATIVE&nbsp;<span class="redacted-bar" style="width:58px"></span></span>
+                    </div>
+                    <p class="classified-desc redacted-content">Experimental <span class="redacted-bar" style="width:64px"></span> engine exploring <span class="redacted-bar" style="width:80px"></span>. Limited disclosure under <span class="redacted-bar" style="width:44px"></span>.</p>
+                    <div class="progress-track"><div class="progress-fill" style="width:12%"></div></div>
+                    <div class="classified-meta">
+                        <span class="classified-tag"><span class="priority-dot"></span> Priority: High</span>
+                        <span class="classified-tag">12% · Concept</span>
+                    </div>
+                    <div class="lock-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+                </div>
+
             </div>
         </section>
 
